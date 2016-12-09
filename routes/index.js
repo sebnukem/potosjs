@@ -8,21 +8,21 @@ router.init = function (data) {
 	pixpath = data;
 };
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-	res.render('index', { title: 'Express' });
-});
+// /* GET home page. */
+// router.get('/', function(req, res, next) {
+// 	res.render('index', { title: 'Express' });
+// });
 
-// ls with callback
-router.get('/pixcb', function(req, res, next) {
-	potos.pixcb(__dirname + "/../public/" + conf.pixpath + "/", req.query.path, function (data) {
-		data.querypath = req.query.path;
-		data.path = conf.pixpath + "/" + req.query.path;
-		if (req.query.fmt === 'json')
-			res.json(data);
-		res.render('pix', data);
-	});
-});
+// // ls with callback
+// router.get('/pixcb', function(req, res, next) {
+// 	potos.pixcb(__dirname + "/../public/" + conf.pixpath + "/", req.query.path, function (data) {
+// 		data.querypath = req.query.path;
+// 		data.path = conf.pixpath + "/" + req.query.path;
+// 		if (req.query.fmt === 'json')
+// 			res.json(data);
+// 		res.render('pix', data);
+// 	});
+// });
 
 // ls with promise
 router.get('/pix', function(req, res, next) {
@@ -33,7 +33,8 @@ router.get('/pix', function(req, res, next) {
 		console.log("/pix data", data);
 		if (req.query.fmt === 'json')
 			res.json(data);
-		res.render('pix', data);
+		else
+			res.render('pix', data);
 	})
 //	.then(res.json)
 //	.catch(function (err) { return "err"; });
