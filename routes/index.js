@@ -25,11 +25,12 @@ router.get('/pixcb', function(req, res, next) {
 });
 
 // ls with promise
-router.get('/pixp', function(req, res, next) {
-	potos.pixp(__dirname + "/../public/" + conf.pixpath + "/", req.query.path)
+router.get('/pix', function(req, res, next) {
+	potos.pix(__dirname + "/../public/" + conf.pixpath + "/", req.query.path)
 	.then(function (data) {
 		data.querypath = req.query.path;
-		data.path = conf.pixpath + "/" + req.query.path;
+		data.path = "/" + conf.pixpath + "/" + req.query.path;
+		console.log("/pix data", data);
 		if (req.query.fmt === 'json')
 			res.json(data);
 		res.render('pix', data);

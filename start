@@ -1,2 +1,2 @@
-DEBUG=t2:* nodemon bin/www
+DEBUG=potosjs:* nodemon bin/www
 

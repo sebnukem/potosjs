@@ -3,7 +3,6 @@ var u = require('./utils');
 
 exports.pixcb = function (fsdir, path, cb) {
 	console.log("potos:pixcb("+fsdir+"+"+path+")");
-
 	fs.readdir(fsdir + path, 'utf8', function (err, files) {
 		if (err) {
 			console.log("ls ", err);
@@ -16,10 +15,9 @@ exports.pixcb = function (fsdir, path, cb) {
 	});
 };
 
-exports.pixp = function(fsdir, path) {
+exports.pix = function(fsdir, path) {
 	return new Promise(function (resolve, reject) {
 		console.log("potos:pixp("+fsdir+"+"+path+")");
-
 		fs.readdir(fsdir + path, 'utf8', function (err, files) {
 			if (err) reject(err);
 			u.filterImages(fsdir + path, files)

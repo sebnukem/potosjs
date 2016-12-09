@@ -39,10 +39,11 @@ function isImage(filename) {
 };
 
 function filterImages(fspath, filenames) {
-	var images = [],
-		pending = filenames.length
-	console.log("u:filterImages "+fspath+","+filenames);
+	var images = [], pending;
+	console.log("u:filterImages "+fspath+","+filenames+' "'+typeof filenames+'"');
+	if (!filenames) return Promise.resolve([]);
 
+	pending = filenames.length;
 	return new Promise(function (resolve, reject) {
 		filenames.forEach(function(filename, index) {
 			isImage(fspath + "/" + filename)
