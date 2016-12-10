@@ -1,16 +1,25 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
+var _ = require('lodash');
 var conf = require('../conf');
 var potos = require('../x/potos');
 var u = require('../x/utils');
 
 router.get('/pix', function(req, res, next) {
-	var query_path = req.query.hasOwnProperty('path') ? path.normalize(req.query.path) : '/';
+
+	var public_conf = _.cloneDeep(conf.public);
+
+	// &path=PATH from public/pix/
+	var query_path = _.has(req.query, 'path') ? path.normalize(req.query.path) : '/';
 	var fsdir = path.normalize(__dirname + "/../public/" + conf.pixpath + "/");
+	// &z=ZOOM in px
+	var init_zoom = u.validateInt(req.query.z, 10, 1000);
+	if (typeof init_zoom !== "undefined") public_conf.zoom = init_zoom;
 
 	potos.pix(fsdir, query_path)
 	.then(function (data) {
+		data.conf = public_conf;
 		data.querypath = query_path;
 		data.path = path.normalize("/" + conf.pixpath + "/" + query_path);
 		data.breadcrumbs = u.splitPath(query_path);

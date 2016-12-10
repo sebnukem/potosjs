@@ -2,6 +2,7 @@ var _ = require('lodash');
 
 exports.filterFiles = filterFiles;
 exports.splitPath = splitPath;
+exports.validateInt = validateInt;
 
 function prettyJson(str, indent) {
 	if (!indent) return str;
@@ -83,4 +84,13 @@ function filterFiles(fspath, filenames) {
 
 function splitPath(path) {
 	return path.split('/').filter(function(e) { return e.length > 0; });
+}
+
+function validateInt(q, min, max) {
+	if (q == null) return undefined;
+	var iq = parseInt(q, 10);
+	if (+q !== iq) return undefined;
+	if (typeof min !== "undefined" && min != null && q < min) return undefined;
+	if (typeof max !== "undefined" && max != null && q > max) return undefined;
+	return iq;
 }
