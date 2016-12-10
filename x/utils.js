@@ -3,7 +3,7 @@ var _ = require('lodash');
 exports.prettyJson = prettyJson;
 exports.detectMime = detectMime;
 exports.isImage = isImage;
-exports.filterImages = filterImages;
+exports.filterFiles = filterFiles;
 
 function prettyJson(str, indent) {
 	if (!indent) return str;
@@ -24,11 +24,11 @@ function detectMime(filename) {
 				reject(err);
 			}
 			console.log("detected "+filename+" mime type "+mime);
-			if (!mime) reject('undefineds');
+			if (!mime) reject('undefined');
 			resolve(mime);
 		});
 	});
-};
+}
 
 function isImage(filename) {
 	console.log("u:isImage "+filename);
@@ -36,25 +36,61 @@ function isImage(filename) {
 	.then(function (mime) {
 		return _.startsWith(mime, 'image');
 	});
-};
+}
 
-function filterImages(fspath, filenames) {
+function checkFilename(filename) {
+	console.log("u:checkFilename "+filename);
+	return new Promise(function (resolve, reject) {
+		if (_.startsWith(filename, '.') || _.startsWith(filename, '$')) reject(filename);
+		resolve(filename);
+	});
+}
+
+function checkFile(fspath, filename) {
+	console.log("u:checkFile "+filename);
+	return Promise.resolve(filename)
+	.then(checkFilename)
+	.then(function () {
+		return detectMime(fspath+'/'+filename)
+	})
+	.then(function (mime) {
+		var output = {
+			n: filename,
+			mime: mime
+		};
+		if (mime == 'inode/directory') output.t = 'dir'
+		else if (_.startsWith(mime, 'image')) output.t = 'img'
+		else return null;
+		return output;
+	})
+	.catch(function (err) {
+		console.log('checkFile error', err);
+		return null;
+	});
+}
+
+function filterFiles(fspath, filenames) {
 	var images = [], pending;
-	console.log("u:filterImages "+fspath+","+filenames+' "'+typeof filenames+'"');
+	console.log("u:filterFiles "+fspath+","+filenames+' "'+typeof filenames+'"');
 	if (!filenames) return Promise.resolve([]);
 
 	pending = filenames.length;
 	return new Promise(function (resolve, reject) {
 		filenames.forEach(function(filename, index) {
-			isImage(fspath + "/" + filename)
-			.then(function (isit) {
-				if (isit) {
-					console.log(filename+" is an image");
-					images.push(filename);
+			checkFile(fspath, filename)
+			.then(function (data) {
+				console.log('checkFile is back:',data);
+				if (data) {
+					console.log(filename+" is a "+data.t);
+					images.push(data);
 				}
+				pending--;
+				if (pending === 0) resolve(images);
+			})
+			.catch(function (err) {
 				pending--;
 				if (pending === 0) resolve(images);
 			});
 		});
 	});
-};
+}

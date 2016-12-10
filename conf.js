@@ -1,1 +1,5 @@
-exports.pixpath = 'pix';
+var config = {
+  pixpath: 'pix'
+};
+
+module.exports = config;

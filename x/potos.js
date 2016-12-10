@@ -20,13 +20,19 @@ exports.pix = function(fsdir, path) {
 		console.log("potos:pixp("+fsdir+"+"+path+")");
 		fs.readdir(fsdir + path, 'utf8', function (err, files) {
 			if (err) reject(err);
-			u.filterImages(fsdir + path, files)
-			.then(function (images) {
+			u.filterFiles(fsdir + path, files)
+			.then(function (files) {
 				resolve({
-					count: images != null ? images.length : 0,
-					files: images
+					count: files != null ? files.length : 0,
+					files: files
 				});
 			});
 		});
 	});
 };
+
+/* files: [ {
+	n: FILENAME,
+	t: dir|img,
+	mime: MIMETYPE
+*/

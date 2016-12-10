@@ -1,0 +1,6 @@
+start with traces:
+DEBUG=potosjs:* nodemon bin/www
+
+enable debug mode:
+node --inspect bin/www
+and use Chrome as IDE
