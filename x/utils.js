@@ -1,8 +1,8 @@
 var _ = require('lodash');
 
-exports.prettyJson = prettyJson;
-exports.detectMime = detectMime;
-exports.isImage = isImage;
+//exports.prettyJson = prettyJson;
+//exports.detectMime = detectMime;
+//exports.isImage = isImage;
 exports.filterFiles = filterFiles;
 
 function prettyJson(str, indent) {
@@ -20,21 +20,12 @@ function detectMime(filename) {
 	return new Promise(function (resolve, reject) {
 		magic.detectFile(filename, function(err, mime) {
 			if (err) {
-				console.log(err);
+				console.log("u:detectMime error", err);
 				reject(err);
 			}
-			console.log("detected "+filename+" mime type "+mime);
 			if (!mime) reject('undefined');
 			resolve(mime);
 		});
-	});
-}
-
-function isImage(filename) {
-	console.log("u:isImage "+filename);
-	return detectMime(filename)
-	.then(function (mime) {
-		return _.startsWith(mime, 'image');
 	});
 }
 
@@ -64,7 +55,7 @@ function checkFile(fspath, filename) {
 		return output;
 	})
 	.catch(function (err) {
-		console.log('checkFile error', err);
+		console.log('u:checkFile error', err);
 		return null;
 	});
 }
@@ -79,11 +70,7 @@ function filterFiles(fspath, filenames) {
 		filenames.forEach(function(filename, index) {
 			checkFile(fspath, filename)
 			.then(function (data) {
-				console.log('checkFile is back:',data);
-				if (data) {
-					console.log(filename+" is a "+data.t);
-					images.push(data);
-				}
+				if (data) images.push(data);
 				pending--;
 				if (pending === 0) resolve(images);
 			})

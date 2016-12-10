@@ -14,14 +14,13 @@
                if (file.t == 'dir') { %>
                <a href="/pix?path=<%=querypath%>/<%=file.n%>"><%= file.n %></a>
             <% } else { %>
-		<!--	<img class="<%=file.t%>" src="<%= path %>/<%= file.n %>" width="50px" onerror='this.style.display = "none"'> -->
-				<img class="<%=file.t%>" src="<%= path %>/<%= file.n %>" width="50px"'>
+		    	<!--img class="<%=file.t%>" src="<%= path %>/<%= file.n %>" width="50px" onerror='this.style.display = "none"'-->
+				<img class="<%=file.t%>" src="<%= path %>/<%= file.n %>" width="50px" title="<%=file.n%>">
 			<% }}); %>
 		</div>
 	</div>
 	<script>
 		// $(function(){
-		// 	$('img.pic').error(function (){ console.log("hiding ", $(this)[0].src); $(this).hide(); });
 		// });
 	</script>
   </body>
