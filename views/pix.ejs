@@ -6,22 +6,23 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   </head>
   <body>
-    <h1>Album
+    <h1 class="collapse">Album
         <% var pp = '';
-           breadcrumbs.forEach(function (p, i) {
-           pp = pp + '/' + p;
-           var is_target = i == breadcrumbs.length - 1;
-           var pathx = is_target ? "path-x" : "path-bc";
-           if (i > 0) {
-            %><span class="path-bc">/</span><% }
-            %><span class="<%= pathx %>"><%
-                if (is_target) {
-                    %><%= p %><%
-                } else {
-                    %><a href="/pix?path=<%= pp %>"><%= p %></a><%
-                }
-            %></span><%
-        }); %>
+            breadcrumbs.forEach(function (p, i) {
+            pp = pp + '/' + p;
+            var is_target = i == breadcrumbs.length - 1;
+            var pathx = is_target ? "path-x" : "path-bc";
+            if (i > 0) {%>
+                <span class="path-bc">/</span>
+            <% } %>
+            <span class="<%= pathx %>">
+                <% if (is_target) { %>
+                    <span><%= p %></span>
+                <% } else { %>
+                    <a href="/pix?path=<%= pp %>"><%= p %></a>
+                <% } %>
+            </span>
+        <% }); %>
     </h1>
     <div>
 		<p><%= count %> images found</p>
@@ -35,9 +36,6 @@
 			<% }}); %>
 		</div>
 	</div>
-	<script>
-		// $(function(){
-		// });
-	</script>
+    <script src="/javascripts/a.js"></script>
   </body>
 </html>
