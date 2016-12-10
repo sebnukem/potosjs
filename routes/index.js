@@ -3,6 +3,7 @@ var router = express.Router();
 var potos = require('../x/potos');
 var conf = require('../conf');
 var path = require('path');
+var u = require('../x/utils');
 
 // ls with promise
 router.get('/pix', function(req, res, next) {
@@ -12,6 +13,7 @@ router.get('/pix', function(req, res, next) {
 	.then(function (data) {
 		data.querypath = query_path;
 		data.path = path.normalize("/" + conf.pixpath + "/" + query_path);
+		data.breadcrumbs = u.splitPath(query_path);
 		console.log("/pix data", data);
 		if (req.query.fmt === 'json')
 			res.json(data);

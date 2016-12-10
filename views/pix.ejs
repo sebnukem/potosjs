@@ -6,13 +6,29 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   </head>
   <body>
-    <h1>Album <%= querypath %></h1>
+    <h1>Album
+        <% var pp = '';
+           breadcrumbs.forEach(function (p, i) {
+           pp = pp + '/' + p;
+           var is_target = i == breadcrumbs.length - 1;
+           var pathx = is_target ? "path-x" : "path-bc";
+           if (i > 0) {
+            %><span class="path-bc">/</span><% }
+            %><span class="<%= pathx %>"><%
+                if (is_target) {
+                    %><%= p %><%
+                } else {
+                    %><a href="/pix?path=<%= pp %>"><%= p %></a><%
+                }
+            %></span><%
+        }); %>
+    </h1>
     <div>
 		<p><%= count %> images found</p>
 		<div>
 			<% files.forEach(function (file) {
                if (file.t == 'dir') { %>
-               <a href="/pix?path=<%=querypath%>/<%=file.n%>"><%= file.n %></a>
+               <a href="/pix?path=<%= querypath %>/<%= file.n %>"><%= file.n %></a>
             <% } else { %>
 		    	<!--img class="<%=file.t%>" src="<%= path %>/<%= file.n %>" width="50px" onerror='this.style.display = "none"'-->
 				<img class="<%=file.t%>" src="<%= path %>/<%= file.n %>" width="50px" title="<%=file.n%>">

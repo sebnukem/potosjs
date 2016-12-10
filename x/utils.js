@@ -4,6 +4,7 @@ var _ = require('lodash');
 //exports.detectMime = detectMime;
 //exports.isImage = isImage;
 exports.filterFiles = filterFiles;
+exports.splitPath = splitPath;
 
 function prettyJson(str, indent) {
 	if (!indent) return str;
@@ -80,4 +81,8 @@ function filterFiles(fspath, filenames) {
 			});
 		});
 	});
+}
+
+function splitPath(path) {
+	return path.split('/').filter(function(e) { return e.length > 0; });
 }
