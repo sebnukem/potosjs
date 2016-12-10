@@ -13,6 +13,10 @@ h1 a {
 h1 a:hover {
   text-decoration: underline;
 }
+
+.pic {
+  max-width: 50px;
+}
 .path-bc {
   font-size: 60%;
 }
