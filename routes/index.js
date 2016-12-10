@@ -5,9 +5,8 @@ var conf = require('../conf');
 var potos = require('../x/potos');
 var u = require('../x/utils');
 
-// ls with promise
 router.get('/pix', function(req, res, next) {
-	var query_path = path.normalize(req.query.path);
+	var query_path = req.query.hasOwnProperty('path') ? path.normalize(req.query.path) : '/';
 	var fsdir = path.normalize(__dirname + "/../public/" + conf.pixpath + "/");
 
 	potos.pix(fsdir, query_path)

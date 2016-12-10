@@ -1,8 +1,5 @@
 var _ = require('lodash');
 
-//exports.prettyJson = prettyJson;
-//exports.detectMime = detectMime;
-//exports.isImage = isImage;
 exports.filterFiles = filterFiles;
 exports.splitPath = splitPath;
 
@@ -24,6 +21,7 @@ function detectMime(filename) {
 				console.log("u:detectMime error", err);
 				reject(err);
 			}
+			console.log('mime '+filename+' = '+mime);
 			if (!mime) reject('undefined');
 			resolve(mime);
 		});
@@ -50,7 +48,7 @@ function checkFile(fspath, filename) {
 			n: filename,
 			mime: mime
 		};
-		if (mime == 'inode/directory') output.t = 'dir'
+		if (mime == 'inode/directory' || mime == 'inode/symlink') output.t = 'dir'
 		else if (_.startsWith(mime, 'image')) output.t = 'img'
 		else return null;
 		return output;
