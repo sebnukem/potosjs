@@ -1,3 +1,5 @@
+'use strict';
+
 $(function() {
 
   // collapse all spaces between elements

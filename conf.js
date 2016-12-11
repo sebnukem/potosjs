@@ -1,3 +1,5 @@
+'use strict';
+
 var config = {
   public: {
     zoom: 50
