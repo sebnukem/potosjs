@@ -20,7 +20,7 @@
         <span class="path-bc"><a href="/pix?<%= querystring %>">/</a></span>
         <% var pp = '';
           breadcrumbs.forEach(function (p, i) {
-            pp = pp + '/' + p;
+            pp = pp ? pp + '/' + p : p;
             var is_target = i == breadcrumbs.length - 1;
             var pathx = is_target ? "path-x" : "path-bc";
             if (i > 0) {%>

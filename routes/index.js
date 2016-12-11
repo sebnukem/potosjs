@@ -12,7 +12,7 @@ router.get('/pix', function(req, res, next) {
 	var public_conf = _.cloneDeep(conf.public);
 
 	// &path=PATH from public/pix/
-	var query_path = _.has(req.query, 'path') ? path.normalize(req.query.path) : '/';
+	var query_path = _.has(req.query, 'path') ? path.normalize(req.query.path) : '';
 	var fsdir = path.normalize(__dirname + "/../public/" + conf.pixpath + "/");
 	// &z=ZOOM in px
 	var init_zoom = u.validateInt(req.query.z, 10, 1000);
