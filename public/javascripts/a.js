@@ -1,4 +1,3 @@
-
 $(function() {
 
   // collapse all spaces between elements
@@ -7,9 +6,9 @@ $(function() {
   });
 
   // thumb resize
-  (function (init_zoom) {
+  (function (conf) {
 
-    var zoom = init_zoom;
+    var zoom = conf.zoom;
 
     function zoomBy(m) {
       zoom = Math.round(zoom * m);
@@ -31,10 +30,10 @@ $(function() {
         return false;
       }
       if (e.keyCode === 61) { // =+ key
-        resizePix(zoomBy(1.1));
+        resizePix(zoomBy(1.11));
         return false;
       }
     });
-  })(50);
+  })(POTOSJS.conf);
 
 });

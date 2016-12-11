@@ -4,6 +4,13 @@
     <title>pix</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script>
+      var POTOSJS = {
+        conf: {
+          zoom: <%= conf.zoom %>
+        }
+      };
+    </script>
     <style>
         .pic { max-width: <%= conf.zoom %>px; }
     </style>
