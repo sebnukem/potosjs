@@ -1,5 +1,7 @@
 var _ = require('lodash');
+var qs = require('querystring');
 
+exports.queryStringNoPath = queryStringNoPath;
 exports.filterFiles = filterFiles;
 exports.splitPath = splitPath;
 exports.validateInt = validateInt;
@@ -9,6 +11,12 @@ function prettyJson(str, indent) {
 	var i = +indent;
 	if (!(i > 0 && i < 9)) i = 2;
 	return JSON.stringify(JSON.parse(str), null, i);
+}
+
+function queryStringNoPath(req_query) {
+	var query_cp = _.clone(req_query);
+	delete query_cp.path;
+	return qs.stringify(query_cp);
 }
 
 var mmmagic = require('mmmagic');
