@@ -16,7 +16,7 @@ $(function() {
       zoom = Math.round(zoom * m);
       if (zoom < 10) zoom = 10;
       if (zoom > 1000) zoom = 1000;
-      console.log('zooming to ' + zoom);
+      console.log(`zooming to ${zoom}`);
       return zoom;
     }
 

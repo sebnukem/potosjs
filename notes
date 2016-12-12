@@ -4,3 +4,12 @@ DEBUG=potosjs:* nodemon bin/www
 enable debug mode:
 node --inspect bin/www
 and use Chrome as IDE
+
+TODO Vue frontend
+
+TODO ES6
+var, let, const
+default params
+arrow functions
+back ticks with template strings
+multi-assignements (like perl $(a,b) = fun()
