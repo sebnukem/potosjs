@@ -104,3 +104,8 @@ function validateInt(q, min, max) {
 	if (typeof max !== "undefined" && max != null && q > max) return undefined;
 	return iq;
 }
+
+function validatePath(s) {
+	if (s == null) return false;
+	return /^[a-z0-9_/% ,.-]+$/i.test(s);
+}
