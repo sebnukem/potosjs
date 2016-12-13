@@ -38,15 +38,16 @@
     <div>
 		<p><%= count %> images found</p>
 		<div>
-			<% files.forEach(function (file) {
-              if (file.t == 'dir') { %>
-                    <a href="/pix?<%= querystring %>&path=<%= querypath %>/<%= file.n %>"><%= file.n %></a>
+			<% files.forEach(function (file) { %>
+            <a href="/pix?<%= querystring %>&path=<%= querypath %>/<%= file.n %>">
+                <% if (file.t == 'dir') { %>
+                    <%= file.n %>
                 <% } else { %>
-                    <a href="/pix?<%= querystring %>&path=<%= querypath %>/<%= file.n %>">
-				    <img class="pic <%=file.t%>" src="<%= path %>/<%= file.n %>" title="<%=file.n%>" >
-                     <!--onerror='this.style.display = "none"'-->
-                        </a>
-			<% }}); %>
+                    <img class="pic <%=file.t%>" src="<%= path %>/<%= file.n %>" title="<%=file.n%>" >
+                    <!--onerror='this.style.display = "none"'-->
+                <% } %>
+            </a>
+			<% }); %>
 		</div>
 	</div>
     <script src="/javascripts/a.js"></script>

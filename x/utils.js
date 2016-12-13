@@ -41,30 +41,34 @@ function detectMime(filename) {
 }
 
 function checkFilename(filename) {
-//	console.log(`u:checkFilename ${filename}`);
-	return new Promise(function (resolve, reject) {
-		if (_.startsWith(filename, '.') || _.startsWith(filename, '$')) reject(filename);
-		resolve(filename);
-	});
+	return !_.startsWith(filename, '.') && !_.startsWith(filename, '$');
 }
 
-function checkFile(fspath, filename, type = '*') {
+function checkType(mime, check_type = '*') {
+	var type = null;
+	if (mime == 'inode/directory' || mime == 'inode/symlink') type = 'dir';
+	else if (_.startsWith(mime, 'image')) type = 'img';
+	if (check_type === '*' || check_type === type) return type;
+	return null;
+}
+
+function checkFile(fspath, filename, check_type = '*') {
 //	console.log(`u:checkFile ${filename}`);
 	return Promise.resolve(filename)
-	.then(checkFilename)
-	.then(function () {
+	.then(() => {
+		if (!checkFilename(filename)) throw filename;
+	})
+	.then(() => {
 		return detectMime(`${fspath}/${filename}`);
 	})
-	.then(function (mime) {
-		var output = {
+	.then((mime) => {
+		var type = checkType(mime, check_type);
+		if (type == null) throw filename;
+		return {
 			n: filename,
-			mime: mime
+			mime: mime,
+			t: type
 		};
-		if (mime == 'inode/directory' || mime == 'inode/symlink') output.t = 'dir'
-		else if (_.startsWith(mime, 'image')) output.t = 'img'
-		else throw filename;
-		if (type !== '*' && output.t !== type) throw filename;
-		return output;
 	})
 	.catch(function (ex) {
 		console.log('u:checkFile rejected', ex);
