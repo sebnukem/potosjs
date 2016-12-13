@@ -4,6 +4,7 @@ var _ = require('lodash');
 var qs = require('querystring');
 
 exports.queryStringNoPath = queryStringNoPath;
+exports.checkFile = checkFile;
 exports.filterFiles = filterFiles;
 exports.splitPath = splitPath;
 exports.validateInt = validateInt;
@@ -47,7 +48,7 @@ function checkFilename(filename) {
 	});
 }
 
-function checkFile(fspath, filename) {
+function checkFile(fspath, filename, type = '*') {
 //	console.log(`u:checkFile ${filename}`);
 	return Promise.resolve(filename)
 	.then(checkFilename)
@@ -62,6 +63,7 @@ function checkFile(fspath, filename) {
 		if (mime == 'inode/directory' || mime == 'inode/symlink') output.t = 'dir'
 		else if (_.startsWith(mime, 'image')) output.t = 'img'
 		else throw filename;
+		if (type !== '*' && output.t !== type) throw filename;
 		return output;
 	})
 	.catch(function (ex) {

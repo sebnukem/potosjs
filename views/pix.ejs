@@ -42,8 +42,10 @@
               if (file.t == 'dir') { %>
                     <a href="/pix?<%= querystring %>&path=<%= querypath %>/<%= file.n %>"><%= file.n %></a>
                 <% } else { %>
+                    <a href="/pix?<%= querystring %>&path=<%= querypath %>/<%= file.n %>">
 				    <img class="pic <%=file.t%>" src="<%= path %>/<%= file.n %>" title="<%=file.n%>" >
                      <!--onerror='this.style.display = "none"'-->
+                        </a>
 			<% }}); %>
 		</div>
 	</div>

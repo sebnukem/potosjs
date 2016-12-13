@@ -3,6 +3,7 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
+var fs = require('fs');
 var _ = require('lodash');
 var conf = require('../conf');
 var potos = require('../x/potos');
@@ -15,25 +16,47 @@ router.get('/pix', function(req, res, next) {
 	// &path=PATH from public/pix/
 	var query_path = _.has(req.query, 'path') ? path.normalize(req.query.path) : '';
 	var fsdir = path.normalize(__dirname + "/../public/" + conf.pixpath + "/");
-	// &z=ZOOM in px
-	var init_zoom = u.validateInt(req.query.z, 10, 1000);
-	if (typeof init_zoom !== "undefined") public_conf.zoom = init_zoom;
+	var is_file = fs.lstatSync(fsdir + query_path).isFile();
+	console.log(`${query_path} is file = ${is_file}`);
 
-	potos.pix(fsdir, query_path)
-	.then(function (data) {
-		data.conf = public_conf;
-		data.querystring = u.queryStringNoPath(req.query);
-		data.querypath = query_path;
-		data.path = path.normalize("/" + conf.pixpath + "/" + query_path);
-		data.breadcrumbs = u.splitPath(query_path);
-		console.log("/pix data", data);
+	if (!is_file) { // album
+		// &z=ZOOM in px
+		let init_zoom = u.validateInt(req.query.z, 10, 1000);
+		if (typeof init_zoom !== "undefined") public_conf.zoom = init_zoom;
 
-		if (req.query.fmt === 'json')
-			res.json(data);
-		else
-			res.render('pix', data);
-	})
-	.catch(next);
+		potos.pix(fsdir, query_path)
+		.then(function (data) {
+			data.conf = public_conf;
+			data.querystring = u.queryStringNoPath(req.query);
+			data.querypath = query_path;
+			data.path = path.normalize("/" + conf.pixpath + "/" + query_path);
+			data.breadcrumbs = u.splitPath(query_path);
+			console.log("/pix data", data);
+
+			if (req.query.fmt === 'json')
+				res.json(data);
+			else
+				res.render('pix', data);
+		})
+		.catch(next);
+	}
+	else { // photo
+		potos.pic(fsdir, query_path)
+		.then(function (data) {
+			data.conf = public_conf;
+			data.querystring = u.queryStringNoPath(req.query);
+			data.querypath = query_path;
+			data.path = path.normalize("/" + conf.pixpath + "/" + query_path);
+			data.breadcrumbs = u.splitPath(query_path);
+			console.log("/pic data", data);
+
+			if (req.query.fmt === 'json')
+				res.json(data);
+			else
+				res.render('pic', data);
+		})
+		.catch(next);
+	}
 });
 
 module.exports = router;

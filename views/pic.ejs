@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>pic</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script>
+        var POTOSJS = {
+            conf: {
+                zoom: <%= conf.zoom %>
+            }
+        };
+    </script>
+    <style>
+    </style>
+</head>
+<body>
+<h1 class="collapse">Photo
+    <span class="path-bc"><a href="/pix?<%= querystring %>">/</a></span>
+    <% var pp = '';
+    breadcrumbs.forEach(function (p, i) {
+        pp = pp ? pp + '/' + p : p;
+        var is_target = i == breadcrumbs.length - 1;
+        var pathx = is_target ? "path-x" : "path-bc";
+    if (i > 0) {%>
+    <span class="path-bc">/</span>
+    <% } %>
+    <span class="<%= pathx %>">
+        <% if (is_target) { %>
+        <span><%= p %></span>
+        <% } else { %>
+        <a href="/pix?<%= querystring %>&path=<%= pp %>"><%= p %></a>
+        <% } %>
+    </span>
+    <% }); %>
+</h1>
+<div>
+    <img class="photo" src="<%= path %>" title="<%= n %>" >
+</div>
+<script src="/javascripts/a.js"></script>
+</body>
+</html>
