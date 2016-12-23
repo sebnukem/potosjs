@@ -9,6 +9,15 @@ var conf = require('../conf');
 var potos = require('../x/potos');
 var u = require('../x/utils');
 
+router.get('/', function(req, res, next) {
+	var data = {
+		title: 'x'
+	};
+
+	res.render('index', data);
+});
+
+
 router.get('/pix', function(req, res, next) {
 
 	var public_conf = _.cloneDeep(conf.public);

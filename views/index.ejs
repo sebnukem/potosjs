@@ -1,11 +1,36 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+<head>
+	<meta charset="utf-8" />
+	<title>potos with vue dev page</title>
+	<link rel='stylesheet' href='/stylesheets/style.css' />
+	<script src='https://unpkg.com/vue/dist/vue.js'></script>
+	<script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="https://unpkg.com/lodash"></script>
+	<script>
+	  var POTOSJS = {
+		conf: {
+		  zoom: 50
+		}
+	  };
+	</script>
+</head>
+<body>
+<div id="app">
+
+	<h1><span @click="traceData">[D]</span> <%= title %> {{ title }}</h1>
+	<p>Album
+		<span v-for="bc in xbreadcrumbs"> / <a href="javascript:void(0)" @click="onPathClicked(bc.pp)">{{ bc.p }}</a></span>
+	</p>
+	<p>{{ count }} files found.</p>
+
+	<span v-if="files.length" v-for="f in files">
+		<a href="javascript:void(0)" @click="onPathClicked(querypath+'/'+f.n)"><img v-if="f.t == 'img'" :class="'pic '+f.t" :src="path+'/'+f.n" :title="f.n"/><span v-if="f.t == 'dir'">{{ f.n }}</span></a>
+	</span>
+
+</div>
+<script src='/javascripts/app.js'></script>
+<script src='/javascripts/a.js'></script>
+</body>
 </html>

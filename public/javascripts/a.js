@@ -10,7 +10,7 @@ $(function() {
   // thumb resize
   (function (conf) {
 
-    var zoom = conf.zoom;
+    var zoom = conf.zoom = 50;
 
     function zoomBy(m) {
       zoom = Math.round(zoom * m);
