@@ -6,20 +6,27 @@ var app = new Vue({
 			pix_topdir: '/pix/'
 		},
 		title: 'potosjs',
-		querypath: '/',
-		count: 0,
-		files: []
+		d: {
+			querypath: '/',
+			count: 0,
+			files: []
+		}
 	},
 	computed: {
-		wpath: function () { return this.conf.pix_topdir + this.querypath + '/'; },
+		wpath: function () {
+			return this.conf.pix_topdir + this.d.querypath + '/';
+		},
 		xbreadcrumbs: function () {
 			var bcs = [{p:'Home', pp:'/'}],
 				acc = '';
-			this.splitPath(this.querypath).forEach(function (p, i) {
+			this.splitPath(this.d.querypath).forEach(function (p, i) {
 				acc = acc + '/' + p;
 				bcs.push({p:p, pp:acc});
 			});
 			return bcs;
+		},
+		is_photo: function () {
+			return typeof this.d.file !== 'undefined';
 		}
 	},
 	watch: {
@@ -31,12 +38,13 @@ var app = new Vue({
 		splitPath: function (path) {
 			return path.split('/').filter((e) => { return e.length > 0; });
 		},
-		onNewPath: function(qpath) {
+		onNewPath: function (path) {
 			var app = this;
-			axios.get('/pix?fmt=json&path='+qpath)
+			axios.get('/pix?fmt=json&path='+path)
 			.then(function (resp) {
 				var data = resp.data;
-				_.assign(app, data);
+				//_.assign(app, data);
+				app.d = data;
 			}).catch(function (err) {
 				console.error('ERROR', err);
 			});

@@ -52,6 +52,11 @@ router.get('/pix', function(req, res, next) {
 	else { // photo
 		potos.pic(fsdir, query_path)
 		.then(function (data) {
+			data.file = {
+				n: data.n,
+				t: data.t,
+				mime: data.mime
+			};
 			data.conf = public_conf;
 			data.querystring = u.queryStringNoPath(req.query);
 			data.querypath = query_path;
