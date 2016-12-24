@@ -9,11 +9,15 @@
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script src="https://unpkg.com/lodash"></script>
 	<script>
-	  var POTOSJS = {
+	var POTOSJS = {
 		conf: {
-		  zoom: 50
+			zoom: 50
+		},
+		init: {
+			querypath: '<%= querypath %>'
 		}
-	  };
+	};
+//	var urlParams = new URLSearchParams(window.location.search); // https://davidwalsh.name/query-string-javascript
 	</script>
 </head>
 <body>

@@ -2,7 +2,9 @@ Vue.component('breadcrumbs', {
 	template: '\
 <span>\
 <span v-if="is_photo">Image</span><span v-else>Album</span>\
-<span v-for="bc in data"> &gt; <a href="javascript:void(0)" @click="onBcClicked(bc.pp)">{{ bc.p }}</a></span>\
+<span v-for="(bc, i) in data">\
+<span v-if="i"> &gt;</span> \
+<a href="javascript:void(0)" @click="onBcClicked(bc.pp)">{{ bc.p }}</a></span>\
 </span>',
 	props: ['is_photo', 'data'],
 	methods: {
@@ -42,7 +44,7 @@ var app = new Vue({
 		show_json: true,
 		title: 'potosjs',
 		d: {
-			querypath: '/',
+			querypath: POTOSJS.init.querypath ? POTOSJS.init.querypath : '/',
 			count: 0,
 			files: []
 		}
@@ -71,6 +73,7 @@ var app = new Vue({
 			return path.split('/').filter((e) => { return e.length > 0; });
 		},
 		onNewPath: function (path) {
+			console.log("loading", path);
 			var app = this;
 			axios.get('/pix?fmt=json&path='+path)
 			.then(function (resp) {
@@ -86,3 +89,6 @@ var app = new Vue({
 		}
 	}
 });
+
+// bootstrap
+app.onNewPath(app.d.querypath);

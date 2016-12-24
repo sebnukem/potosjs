@@ -10,13 +10,10 @@ var potos = require('../x/potos');
 var u = require('../x/utils');
 
 router.get('/', function(req, res, next) {
-	var data = {
-		title: 'x'
-	};
-
-	res.render('index', data);
+	res.render('index', {
+		querypath: _.has(req.query, 'path') ? path.normalize(req.query.path) : ''
+	});
 });
-
 
 router.get('/pix', function(req, res, next) {
 
