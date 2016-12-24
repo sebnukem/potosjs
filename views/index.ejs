@@ -36,7 +36,10 @@
 		</span>
 	</div>
 
-	<pre style="font-size:10px">{{ $data }}, is_photo: {{ is_photo }}, xbreadcrumbs: {{ xbreadcrumbs }}</pre>
+	<div class="debug-box" @click="show_json = !show_json">
+		<pre v-show="!show_json" class="clickable">☞ data</pre>
+		<pre v-show="show_json">{{ $data }}, is_photo: {{ is_photo }}, xbreadcrumbs: {{ xbreadcrumbs }}</pre>
+	</div>
 </div>
 
 <script src='/javascripts/app.js'></script>

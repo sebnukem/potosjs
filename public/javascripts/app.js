@@ -39,6 +39,7 @@ var app = new Vue({
 		conf: {
 			pix_topdir: '/pix/'
 		},
+		show_json: true,
 		title: 'potosjs',
 		d: {
 			querypath: '/',
@@ -66,9 +67,6 @@ var app = new Vue({
 	watch: {
 	},
 	methods: {
-		traceData: function () {
-			console.log(this.$data);
-		},
 		splitPath: function (path) {
 			return path.split('/').filter((e) => { return e.length > 0; });
 		},
@@ -76,9 +74,7 @@ var app = new Vue({
 			var app = this;
 			axios.get('/pix?fmt=json&path='+path)
 			.then(function (resp) {
-				var data = resp.data;
-				//_.assign(app, data);
-				app.d = data;
+				app.d = resp.data; //_.assign(app, resp.data);
 			}).catch(function (err) {
 				console.error('ERROR', err);
 			});
