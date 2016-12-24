@@ -22,21 +22,17 @@
 	<h1>{{ title }}</h1>
 
 	<div v-if="is_photo">
-		<p>Image
-			<span v-for="bc in xbreadcrumbs"> &gt; <a href="javascript:void(0)" @click="onPathClicked(bc.pp)">{{ bc.p }}</a></span>
-		</p>
+		<p><breadcrumbs :is_photo="is_photo" :data="xbreadcrumbs" @clicko="onPathClicked" /></p>
 
 		<img :class="'photo '+d.file.t" :src="d.path" :title="d.file.n"/>
 	</div>
 
 	<div v-else>
-		<p>Album
-			<span v-for="bc in xbreadcrumbs"> &gt; <a href="javascript:void(0)" @click="onPathClicked(bc.pp)">{{ bc.p }}</a></span>
-		</p>
+		<p><breadcrumbs :is_photo="is_photo" :data="xbreadcrumbs" @clicko="onPathClicked" /></p>
 		<p>{{ d.count }} files found.</p>
 
 		<span v-if="d.files.length" v-for="f in d.files">
-			<img-thumbnail :data="d" :file="f" v-on:clicko="onPathClicked" />
+			<img-thumbnail :data="d" :file="f" @clicko="onPathClicked" />
 		</span>
 	</div>
 

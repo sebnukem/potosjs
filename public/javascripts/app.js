@@ -1,3 +1,18 @@
+Vue.component('breadcrumbs', {
+	template: '\
+<span>\
+<span v-if="is_photo">Image</span><span v-else>Album</span>\
+<span v-for="bc in data"> &gt; <a href="javascript:void(0)" @click="onBcClicked(bc.pp)">{{ bc.p }}</a></span>\
+</span>',
+	props: ['is_photo', 'data'],
+	methods: {
+		onBcClicked: function (e) {
+			console.log('BC clicked', e);
+			this.$emit('clicko', e);
+		}
+	}
+});
+
 Vue.component('img-thumbnail', {
 	template: '\
 <a href="javascript:void(0)" @click="onTnClicked(click_to)">\
@@ -12,7 +27,7 @@ Vue.component('img-thumbnail', {
 	},
 	methods: {
 		onTnClicked: function (e) {
-			console.log('TN onClicked', e);
+			console.log('TN clicked', e);
 			this.$emit('clicko', e);
 		}
 	}
