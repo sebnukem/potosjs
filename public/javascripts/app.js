@@ -1,3 +1,22 @@
+Vue.component('img-thumbnail', {
+	template: '\
+<a href="javascript:void(0)" @click="onTnClicked(click_to)">\
+<img v-if="file.t == \'img\'" :class="\'pic \'+file.t" :src="img_src" :title="filename+\' @ \'+img_src"/>\
+<span v-if="file.t == \'dir\'" >{{ filename }}</span>\
+</a>',
+	props: ['data', 'file'],
+	computed: {
+		filename: function () { return this.file.n; },
+		click_to: function () { return this.data.querypath + '/' + this.filename; },
+		img_src: function () { return this.data.path + '/' + this.filename; }
+	},
+	methods: {
+		onTnClicked: function (e) {
+			console.log('TN onClicked', e);
+			this.$emit('clicko', e);
+		}
+	}
+});
 
 var app = new Vue({
 	el: '#app',
@@ -33,7 +52,7 @@ var app = new Vue({
 	},
 	methods: {
 		traceData: function () {
-			console.log(this);
+			console.log(this.$data);
 		},
 		splitPath: function (path) {
 			return path.split('/').filter((e) => { return e.length > 0; });

@@ -19,28 +19,30 @@
 <body>
 <div id="app">
 
-	<h1><span @click="traceData">[D]</span> <%= title %> {{ title }}</h1>
-
-	<div v-if="!is_photo">
-		<p>Album
-			<span v-for="bc in xbreadcrumbs"> / <a href="javascript:void(0)" @click="onPathClicked(bc.pp)">{{ bc.p }}</a></span>
-		</p>
-		<p>{{ d.count }} files found.</p>
-
-		<span v-if="d.files.length" v-for="f in d.files">
-			<a href="javascript:void(0)" @click="onPathClicked(d.querypath+'/'+f.n)"><img v-if="f.t == 'img'" :class="'pic '+f.t" :src="d.path+'/'+f.n" :title="f.n"/><span v-if="f.t == 'dir'">{{ f.n }}</span></a>
-		</span>
-	<div>
+	<h1>{{ title }}</h1>
 
 	<div v-if="is_photo">
 		<p>Image
-			<span v-for="bc in xbreadcrumbs"> / <a href="javascript:void(0)" @click="onPathClicked(bc.pp)">{{ bc.p }}</a></span>
+			<span v-for="bc in xbreadcrumbs"> &gt; <a href="javascript:void(0)" @click="onPathClicked(bc.pp)">{{ bc.p }}</a></span>
 		</p>
 
 		<img :class="'photo '+d.file.t" :src="d.path" :title="d.file.n"/>
 	</div>
 
+	<div v-else>
+		<p>Album
+			<span v-for="bc in xbreadcrumbs"> &gt; <a href="javascript:void(0)" @click="onPathClicked(bc.pp)">{{ bc.p }}</a></span>
+		</p>
+		<p>{{ d.count }} files found.</p>
+
+		<span v-if="d.files.length" v-for="f in d.files">
+			<img-thumbnail :data="d" :file="f" v-on:clicko="onPathClicked" />
+		</span>
+	</div>
+
+	<pre style="font-size:10px">{{ $data }}, is_photo: {{ is_photo }}, xbreadcrumbs: {{ xbreadcrumbs }}</pre>
 </div>
+
 <script src='/javascripts/app.js'></script>
 <script src='/javascripts/a.js'></script>
 </body>
