@@ -87,8 +87,9 @@ var app = new Vue({
 			console.log("path clicked:", href);
 			this.onNewPath(href);
 		}
+	},
+	created: function () {
+		console.log('app ready');
+		this.onNewPath(this.d.querypath);
 	}
 });
-
-// bootstrap
-app.onNewPath(app.d.querypath);
