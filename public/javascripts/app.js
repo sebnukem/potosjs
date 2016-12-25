@@ -39,6 +39,7 @@ var app = new Vue({
 	el: '#app',
 	data: {
 		conf: {
+			zoom: POTOSJS.conf.zoom,
 			pix_topdir: '/pix/'
 		},
 		show_json: true,
@@ -86,10 +87,38 @@ var app = new Vue({
 			var href = typeof e === 'string' ? e : e.target.innerText;
 			console.log("path clicked:", href);
 			this.onNewPath(href);
+		},
+		onZoomClicked: function(by) {
+			var app = this;
+			function zoomBy(m) {
+				var zoom = app.conf.zoom;
+				zoom = Math.round(zoom * m);
+				if (zoom < 10) zoom = 10;
+				if (zoom > 1000) zoom = 1000;
+				return zoom;
+			};
+			function resizePix(zoom) {
+				console.log(`resizing thumbs to ${zoom}`);
+				$('.pic').each(function () {
+					$(this).css('maxWidth', zoom);
+				});
+				return zoom;
+			}
+			app.conf.zoom = resizePix(zoomBy(by));
+		},
+		onKeyup(e) {
+			console.log("key pressed", e);
+			if (e.keyCode === 173) { // -_ key
+				this.onZoomClicked(0.9);
+			}
+			if (e.keyCode === 61) { // =+ key
+				this.onZoomClicked(1.11);
+			}
 		}
 	},
 	created: function () {
 		console.log('app ready');
+		window.addEventListener('keyup', this.onKeyup);
 		this.onNewPath(this.d.querypath);
 	}
 });
