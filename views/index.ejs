@@ -5,14 +5,14 @@
 	<title>potos with vue dev page</title>
 	<link rel='stylesheet' href='/stylesheets/style.css' />
 	<script>
-	var POTOSJS = {
-		conf: {
-			zoom: 50
-		},
-		init: {
-			querypath: '<%= querypath %>'
-		}
-	};
+var POTOSJS = {
+	conf: {
+		zoom: <%= initzoom %>
+	},
+	init: {
+		querypath: '<%= querypath %>'
+	}
+};
 //	var urlParams = new URLSearchParams(window.location.search); // https://davidwalsh.name/query-string-javascript
 	</script>
 </head>
@@ -32,7 +32,7 @@
 		<p>{{ d.count }} files found.</p>
 
 		<span v-if="d.files.length" v-for="f in d.files">
-			<img-thumbnail :data="d" :file="f" @clicko="onPathClicked" />
+			<img-thumbnail :data="d" :file="f" :mw="conf.zoom" @clicko="onPathClicked" />
 		</span>
 	</div>
 

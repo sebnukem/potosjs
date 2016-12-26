@@ -18,14 +18,15 @@ Vue.component('breadcrumbs', {
 Vue.component('img-thumbnail', {
 	template: '\
 <a href="javascript:void(0)" @click="onTnClicked(click_to)">\
-<img v-if="file.t == \'img\'" :class="\'pic \'+file.t" :src="img_src" :title="filename+\' @ \'+img_src"/>\
+<img v-if="file.t == \'img\'" :class="\'pic \'+file.t" :style="img_style" :src="img_src" :title="filename+\' @ \'+img_src"/>\
 <span v-if="file.t == \'dir\'" >{{ filename }}</span>\
 </a>',
-	props: ['data', 'file'],
+	props: ['data', 'file', 'mw'],
 	computed: {
-		filename: function () { return this.file.n; },
-		click_to: function () { return this.data.querypath + '/' + this.filename; },
-		img_src: function () { return this.data.path + '/' + this.filename; }
+		filename : function () { return this.file.n; },
+		click_to : function () { return `${this.data.querypath}/${this.filename}`; },
+		img_src  : function () { return `${this.data.path}/${this.filename}`; },
+		img_style: function () { return `max-width:${this.mw}px`; }
 	},
 	methods: {
 		onTnClicked: function (e) {
@@ -73,7 +74,7 @@ var app = new Vue({
 		splitPath: function (path) {
 			return path.split('/').filter((e) => { return e.length > 0; });
 		},
-		onNewPath: function (path) {
+		onNewPath: function (path) { // refresh
 			console.log("loading", path);
 			var app = this;
 			axios.get('/pix?fmt=json&path='+path)
