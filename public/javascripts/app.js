@@ -40,7 +40,7 @@ var app = new Vue({
 	el: '#app',
 	data: {
 		conf: {
-			zoom: POTOSJS.conf.zoom,
+			zoom: POTOSJS.ls.get('thumbs.size', POTOSJS.conf.zoom),
 			pix_topdir: '/pix/'
 		},
 		show_json: true,
@@ -92,7 +92,7 @@ var app = new Vue({
 		onZoomClicked: function(by) {
 			var app = this;
 			function zoomBy(m) {
-				var zoom = app.conf.zoom;
+				var zoom = POTOSJS.ls.get('thumbs.size', app.conf.zoom);
 				zoom = Math.round(zoom * m);
 				if (zoom < 10) zoom = 10;
 				if (zoom > 1000) zoom = 1000;
@@ -106,6 +106,7 @@ var app = new Vue({
 				return zoom;
 			}
 			app.conf.zoom = resizePix(zoomBy(by));
+			POTOSJS.ls.set('thumbs.size', app.conf.zoom);
 		},
 		onKeyup(e) {
 			console.log("key pressed", e);
