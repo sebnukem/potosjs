@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
 	var init_zoom = u.validateInt(req.query.z, 10, 1000); // &z=ZOOM in px
 
 	res.render('index', {
-		initzoom: typeof init_zoom !== "undefined" ? init_zoom : 50,
+		initzoom: init_zoom == null ? 0 : init_zoom,
 		querypath: _.has(req.query, 'path') ? path.normalize(req.query.path) : ''
 	});
 });

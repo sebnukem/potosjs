@@ -27,3 +27,8 @@ POTOSJS.ls = {
 		return v;
 	}
 };
+
+// split path
+POTOSJS.splitPath = function (path) {
+	return path.split('/').filter((e) => { return e.length > 0; });
+};

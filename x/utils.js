@@ -103,11 +103,11 @@ function splitPath(path) {
 }
 
 function validateInt(q, min, max) {
-	if (q == null) return undefined;
+	if (q == null) return null;
 	var iq = parseInt(q, 10);
-	if (+q !== iq) return undefined;
-	if (typeof min !== 'undefined' && min != null && q < min) return undefined;
-	if (typeof max !== 'undefined' && max != null && q > max) return undefined;
+	if (+q !== iq) return null;
+	if (typeof min !== 'undefined' && min != null && q < min) return null;
+	if (typeof max !== 'undefined' && max != null && q > max) return null;
 	return iq;
 }
 

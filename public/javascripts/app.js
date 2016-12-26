@@ -40,7 +40,7 @@ var app = new Vue({
 	el: '#app',
 	data: {
 		conf: {
-			zoom: POTOSJS.ls.get('thumbs.size', POTOSJS.conf.zoom),
+			zoom: +POTOSJS.conf.zoom || POTOSJS.ls.get('thumbs.size', 50),
 			pix_topdir: '/pix/'
 		},
 		show_json: true,
@@ -71,9 +71,7 @@ var app = new Vue({
 	watch: {
 	},
 	methods: {
-		splitPath: function (path) {
-			return path.split('/').filter((e) => { return e.length > 0; });
-		},
+		splitPath: POTOSJS.splitPath,
 		onNewPath: function (path) { // refresh
 			console.log("loading", path);
 			var app = this;
@@ -122,5 +120,6 @@ var app = new Vue({
 		console.log('app ready');
 		window.addEventListener('keyup', this.onKeyup);
 		this.onNewPath(this.d.querypath);
+		POTOSJS.ls.set('thumbs.size', this.conf.zoom);
 	}
 });
