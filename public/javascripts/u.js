@@ -18,7 +18,7 @@ POTOSJS.ls = {
 		localStorage.setItem(kk, v);
 		console.log(`ls stored ${kk}=${v}`);
 	},
-	get: function(k, d) {
+	get: function(k, d = null) {
 		if (typeof Storage === "undefined") return d;
 		var kk = POTOSJS.conf.ls_prefix + k;
 		var v = localStorage.getItem(kk);

@@ -90,7 +90,7 @@ var app = new Vue({
 		onZoomClicked: function(by) {
 			var app = this;
 			function zoomBy(m) {
-				var zoom = POTOSJS.ls.get('thumbs.size', app.conf.zoom);
+				var zoom = app.conf.zoom;
 				zoom = Math.round(zoom * m);
 				if (zoom < 10) zoom = 10;
 				if (zoom > 1000) zoom = 1000;
