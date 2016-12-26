@@ -19,7 +19,7 @@ Vue.component('img-thumbnail', {
 	template: '\
 <a href="javascript:void(0)" @click="onTnClicked(click_to)">\
 <img v-if="file.t == \'img\'" :class="\'pic \'+file.t" :style="img_style" :src="img_src" :title="filename+\' @ \'+img_src"/>\
-<span v-if="file.t == \'dir\'" >{{ filename }}</span>\
+<span v-if="file.t == \'dir\'" class="album">{{ filename }}</span>\
 </a>',
 	props: ['data', 'file', 'mw'],
 	computed: {

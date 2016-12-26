@@ -19,20 +19,22 @@ var POTOSJS = {
 <body>
 <div id="app">
 
-	<h1>{{ title }}</h1>
-
 	<div v-if="is_photo">
-		<p><breadcrumbs :is_photo="is_photo" :data="xbreadcrumbs" @clicko="onPathClicked" /></p>
+		<h1><breadcrumbs :is_photo="is_photo" :data="xbreadcrumbs" @clicko="onPathClicked" /></h1>
 
 		<img :class="'photo '+d.file.t" :src="d.path" :title="d.file.n"/>
 	</div>
 
 	<div v-else>
-		<p><breadcrumbs :is_photo="is_photo" :data="xbreadcrumbs" @clicko="onPathClicked" /></p>
+		<h1><breadcrumbs :is_photo="is_photo" :data="xbreadcrumbs" @clicko="onPathClicked" /></h1>
 		<p>{{ d.count }} files found.</p>
 
 		<span v-if="d.files.length" v-for="f in d.files">
-			<img-thumbnail :data="d" :file="f" :mw="conf.zoom" @clicko="onPathClicked" />
+			<img-thumbnail v-if="f.t == 'dir'" :data="d" :file="f" :mw="conf.zoom" @clicko="onPathClicked" />
+		</span>
+		<br>
+		<span v-if="d.files.length" v-for="f in d.files">
+			<img-thumbnail v-if="f.t == 'img'" :data="d" :file="f" :mw="conf.zoom" @clicko="onPathClicked" />
 		</span>
 	</div>
 

@@ -1,6 +1,9 @@
 body {
-	padding: 50px;
-	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	padding: 4px 40px 40px 40px;
+	font: 12px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+h1 {
+	font-size: 16px;
 }
 
 .debug-box {
@@ -17,16 +20,13 @@ body {
 
 a {
 	color: #00B7FF;
-}
-
-h1 a {
 	text-decoration: none;
 }
 
-h1 a:hover {
-	text-decoration: underline;
+.album {
+	display: inline-block;
+	padding: 10px;
 }
-
 .pic {
 	max-width: 50px;
 	margin: 4px;
@@ -34,7 +34,7 @@ h1 a:hover {
 }
 
 .path-bc {
-	font-size: 60%;
+	font-size: 80%;
 }
 
 .photo {}

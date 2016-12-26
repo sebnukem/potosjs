@@ -83,16 +83,18 @@ function filterFiles(fspath, filenames) {
 
 	pending = filenames.length;
 	return new Promise(function (resolve, reject) {
+		function checkDone() {
+			pending--;
+			if (pending === 0) resolve(_.sortBy(images, 'n'));
+		};
 		filenames.forEach(function(filename, index) {
 			checkFile(fspath, filename)
 			.then(function (data) {
 				if (data) images.push(data);
-				pending--;
-				if (pending === 0) resolve(_.sortBy(images, 'n'));
+				checkDone();
 			})
 			.catch(function (err) {
-				pending--;
-				if (pending === 0) resolve(_.sortBy(images, 'n'));
+				checkDone();
 			});
 		});
 	});
