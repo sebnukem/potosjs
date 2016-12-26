@@ -11,22 +11,26 @@ var POTOSJS = POTOSJS || {
 
 // init localstorage
 POTOSJS.conf.ls_prefix = 'potosjs.';
-POTOSJS.ls = {
-	set: function(k, v) {
-		if (typeof Storage === "undefined") return null;
-		var kk = POTOSJS.conf.ls_prefix + k;
-		localStorage.setItem(kk, v);
-		console.log(`ls stored ${kk}=${v}`);
-	},
-	get: function(k, d = null) {
-		if (typeof Storage === "undefined") return d;
-		var kk = POTOSJS.conf.ls_prefix + k;
-		var v = localStorage.getItem(kk);
-		console.log(`ls retrieved ${kk}=${v} | ${d}`);
-		if (v == null) return d;
-		return v;
-	}
-};
+POTOSJS.ls = (function () {
+	var prefix = POTOSJS.conf.ls_prefix;
+	return typeof Storage !== "undefined" ? {
+		set: function(k, v) {
+			var kk = prefix + k;
+			localStorage.setItem(kk, v);
+			console.log(`ls stored ${kk}=${v}`);
+		},
+		get: function(k, d = null) {
+			var kk = prefix + k;
+			var v = localStorage.getItem(kk);
+			console.log(`ls retrieved ${kk}=${v} | ${d}`);
+			if (v == null) return d;
+			return v;
+		}
+	} : { // localStorage is not available
+		set: function (k, v) { return null; },
+		get: function (k, d = null) { return d; }
+	};
+})();
 
 // split path
 POTOSJS.splitPath = function (path) {
