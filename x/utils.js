@@ -88,11 +88,11 @@ function filterFiles(fspath, filenames) {
 			.then(function (data) {
 				if (data) images.push(data);
 				pending--;
-				if (pending === 0) resolve(images);
+				if (pending === 0) resolve(_.sortBy(images, 'n'));
 			})
 			.catch(function (err) {
 				pending--;
-				if (pending === 0) resolve(images);
+				if (pending === 0) resolve(_.sortBy(images, 'n'));
 			});
 		});
 	});
